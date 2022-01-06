@@ -1,4 +1,5 @@
-// Includes the shared
+if (not TESTADDON_ENABLED) then return end
+
 include("autorun/sh_testaddon.lua")
 
 surface.CreateFont("zachsb_14", {
@@ -11,8 +12,6 @@ surface.CreateFont("zachsb_24", {
 	size = 24,
 	weight = 500,
 })
-
-/*
 
 hook.Add("HUDPaint", "ZachHud", function()
     local scrw, scrh = ScrW(), ScrH()
@@ -98,9 +97,6 @@ end)
 hook.Add("ScoreboardHide", "ZachScoreboardHide", function()
     ToggleScoreboard(false)
 end)
-
-*/
-
 
 // Verify file loads
 print(GLOBAL_LOADEDCLIENT)

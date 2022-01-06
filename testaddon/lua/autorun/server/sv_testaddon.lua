@@ -1,4 +1,5 @@
-// Includes the shared
+if (not TESTADDON_ENABLED) then return end
+
 include("autorun/sh_testaddon.lua")
 
 util.AddNetworkString("displaymessage_update")
