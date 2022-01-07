@@ -16,6 +16,21 @@ ZACH_INV.UseTypes = {
 
         return false
     end,
+
+    entity = function(itemData, ply)
+        local ent = ents.Create(itemData.classname)
+        local tr = util.TraceLine({
+            start = ply:EyePos(),
+            endpos = ply:EyePos() + ply:EyeAngles():Forward() * 50,
+            filter = ply,
+        })
+
+        ent:SetPos(tr.HitPos)
+        ent:SetAngles(Angle(0, 0, 0))
+        ent:Spawn()
+
+        return true
+    end,
 }
 
 function ZACH_INV.AddItem(data)
@@ -50,6 +65,13 @@ ZACH_INV.AddItem({
     classname = "model_alyx",
     model = "models/player/alyx.mdl",
     type = "model",
+})
+
+ZACH_INV.AddItem({
+    name = "Bouncy Ball",
+    classname = "sent_ball",
+    model = "models/combine_helicopter/helicopter_bomb01.mdl",
+    type = "entity",
 })
 
 print("sh_inventory loaded")

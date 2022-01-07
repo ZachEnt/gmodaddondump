@@ -13,6 +13,14 @@ concommand.Add("zach_model", function(ply)
     print(wep:GetWeaponWorldModel())
 end)
 
+concommand.Add("inv_tr_model", function(ply)
+    local ent = ply:GetEyeTrace().Entity
+
+    if (not IsValid(ent)) then return end
+
+    print(ent:GetModel())
+end)
+
 net.Receive("inv_init", function()
     LocalPlayer().zach_inv = {}
 end)
@@ -28,6 +36,12 @@ net.Receive("inv_remove", function()
     LocalPlayer().zach_inv[id] = nil
 end)
 
+net.Receive("inv_refresh", function()
+    if (IsValid(ZACH_INV.Menu)) then
+        ZACH_INV.Open() 
+    end
+end)
+
 function ZACH_INV.Open()
     local ply = LocalPlayer()
     local plyInv = ply.zach_inv
@@ -35,6 +49,10 @@ function ZACH_INV.Open()
     if (not ply.zach_inv) then return end
 
     local scrw, scrh = ScrW(), ScrH()
+
+    if (IsValid(ZACH_INV.Menu)) then
+        ZACH_INV.Menu:Remove()
+    end
 
     ZACH_INV.Menu = vgui.Create("DFrame")
     local inv = ZACH_INV.Menu

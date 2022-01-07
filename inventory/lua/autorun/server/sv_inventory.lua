@@ -4,6 +4,7 @@ local nets = {
     "inv_use",
     "inv_drop",
     "inv_remove",
+    "inv_refresh",
 }
 
 for k, v in ipairs(nets) do
@@ -48,6 +49,8 @@ function _P:InvGive(classname)
     net.WriteString(classname)
     net.Send(self)
 
+    self:InvRefresh()
+
     self:InvLog("Successfully picked up item: " .. classname)
 end
 
@@ -60,6 +63,13 @@ function _P:InvRemoveItem(id)
 
     net.Start("inv_remove")
     net.WriteInt(id, 32)
+    net.Send(self)
+
+    self:InvRefresh()
+end
+
+function _P:InvRefresh()
+    net.Start("inv_refresh")
     net.Send(self)
 end
 
