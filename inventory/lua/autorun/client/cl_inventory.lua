@@ -122,7 +122,9 @@ function ZACH_INV.Open()
             draw.SimpleText("Drop", "inv_24", w * .5, h * .5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
         dropButton.DoClick = function()
-
+            net.Start("inv_drop")
+            net.WriteInt(k, 32)
+            net.SendToServer()
         end
 
         scroll.panels[ItemPanel] = true 

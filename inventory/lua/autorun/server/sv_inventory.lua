@@ -86,6 +86,26 @@ net.Receive("inv_use", function(len, ply)
     end
 end)
 
+net.Receive("inv_drop", function(len, ply)
+    local id = net.ReadInt(32)
+
+    if (ply:InvHasItem(id)) then
+        local itemData = ZACH_INV.Items[ply.zach_inv[id]]
+        local tr = util.TraceLine({
+            start = ply:EyePos(),
+            endpos = ply:EyePos() + ply:EyeAngles():Forward() * 50,
+            filter = ply,
+        })
+
+        local itemEnt = ents.Create("inv_item")
+        itemEnt:SetPos(tr.HitPos)
+        itemEnt:SetAngles(Angle(0, 0, 0))
+        itemEnt:Spawn()
+        itemEnt:SetItem(itemData)
+        ply:InvRemoveItem(id)
+    end
+end)
+
 concommand.Add("inv_give", function(ply, cmd, args)
     if (not ply:IsSuperAdmin()) then return end
 
